@@ -8,10 +8,8 @@ provider:
   runtime: nodejs18.x
   region: ${opt:region, 'us-east-2'}
   stage: ${opt:stage, 'dev'}
-  memorySize: 2048
+  memorySize: 1024
   profile: default
-  tracing:
-    lambda: true
   environment:
     STAGE: ${self:provider.stage}
     BUCKET_NAME: ${self:custom.bucketName}
@@ -49,9 +47,6 @@ functions:
   createStudents:
     handler: ./src/functions/student/create.handler
     description: Creates a new student
-    memorySize: 256
-    tracing: Active
-    timeout: 10
     events:
       - http:
           path: /api/${self:custom.apiVersion}/students
@@ -66,7 +61,6 @@ functions:
   listStudents:
     handler: ./src/functions/student/list.handler
     description: Get list of students
-    memorySize: 256
     events:
       - http:
           path: /api/${self:custom.apiVersion}/students

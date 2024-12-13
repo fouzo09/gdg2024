@@ -1,122 +1,155 @@
-# Dounkoun - Package Delivery Offer Management Platform
+# Dounkoun - Plateforme de Gestion d'Offres de Livraison
 
-## Table of Contents
+## Table des matières
 
 1. [Introduction](#introduction)
-2. [Features](#features)
+2. [Fonctionnalités](#fonctionnalités)
 3. [Architecture](#architecture)
-4. [Prerequisites](#prerequisites)
+4. [Prérequis](#prérequis)
 5. [Installation](#installation)
-6. [Deployment](#deployment)
-7. [Usage](#usage)
-8. [Tests](#tests)
-9. [Contributing](#contributing)
-10. [License](#license)
+6. [Déploiement](#déploiement)
+7. [Utilisation](#utilisation)
+8. [Optiomisation](#optimisation)
+9. [Observation](#observation)
+10. [Tests](#tests)
+11. [Contribution](#contribution)
+12. [Licence](#licence)
 
 ## Introduction
 
-Dounkoun is a package delivery offer management platform. It allows users to publish, search, and view transport offers. This project uses a serverless architecture based on AWS Lambda, with TypeScript as the primary language, DynamoDB for data storage, and AWS SDK v3 for interaction with AWS services.
+Ce projet utilise une architecture serverless basée sur AWS Lambda, avec TypeScript comme langage principal, DynamoDB pour le stockage des données, et AWS SDK v3 pour l'interaction avec les services AWS.
 
-## Features
+## Fonctionnalités
 
-- **Offer Publication**: Users can publish delivery offers with details such as departure date, available quantity, country, city, and an image.
-- **Offer Modification**: Ability to edit published offers.
-- **Offer Validation**: Offers can be marked as validated once ready.
-- **Offer Closure**: Users can close offers once delivery is complete or if they are no longer available.
-- **Advanced Search**: Search across all columns in the delivery offer database.
-- **Offer Subscription**: Users can subscribe to specific offers.
-- **Offer Deletion**: Ability to delete a published offer.
+- **Creation etudiant ** : Permet de creer un etudiant
+- **Liste etudiant ** : Permet de lister les etudiants
 
 ## Architecture
 
-- **Backend**: AWS Lambda (Node.js 20)
-- **Database**: Amazon DynamoDB
-- **Language**: TypeScript
-- **SDK**: AWS SDK v3
-- **Serverless Framework**: Serverless Framework
+- **Backend** : AWS Lambda (Node.js 20)
+- **Base de données** : Amazon DynamoDB
+- **Langage** : TypeScript
+- **SDK** : AWS SDK v3
+- **Framework Serverless** : Serverless Framework
 
-## Prerequisites
+## Prérequis
 
-Before starting, make sure you have installed:
+Avant de commencer, assurez-vous d'avoir installé :
 
-- [Node.js](https://nodejs.org/) (v14 or higher)
-- [npm](https://www.npmjs.com/) (usually installed with Node.js)
+- [Node.js](https://nodejs.org/) (v14 ou supérieure)
+- [npm](https://www.npmjs.com/) (généralement installé avec Node.js)
 - [AWS CLI](https://aws.amazon.com/cli/)
 - [Serverless Framework](https://www.serverless.com/)
 
-You will also need:
+Vous aurez également besoin :
 
-- An AWS account with appropriate permissions to deploy Lambda and DynamoDB resources.
-- AWS access keys configured locally.
+- D'un compte AWS avec les permissions appropriées pour déployer des ressources Lambda et DynamoDB.
+- Des clés d'accès AWS configurées localement.
 
 ## Installation
 
-1. Clone the repository:
+1. Clonez le dépôt :
 
    ```bash
-   git clone https://github.com/Donkoun-project/api.git donkoun
-   cd dounkoun
+   git clone https://github.com/fouzo09/gdg2024.git
+   cd gdg2024
    ```
 
-2. Install dependencies:
+2. Installez les dépendances :
 
    ```bash
    npm install
    ```
 
-3. Configure your AWS credentials if not already done:
+3. Configurez vos credentials AWS si ce n'est pas déjà fait :
    ```bash
    aws configure
    ```
-
-4. Install Serverless Framework globally:
+4. Configurez vos credentials AWS si ce n'est pas déjà fait :
    ```bash
    npm install -g serverless
    ```
 
-## Deployment
+## Déploiement
 
-1. Deploy with Serverless Framework:
+1. Déployez avec Serverless Framework :
    ```bash
    serverless deploy
    ```
 
-## Usage
+## Utilisation
 
-After deployment, Serverless Framework will display the API endpoints. Use these URLs to interact with your application.
+Après le déploiement, Serverless Framework affichera les endpoints API. Utilisez ces URLs pour interagir avec votre application.
 
-Example usage with curl:
+Exemple d'utilisation avec curl :
 
 ```bash
 curl -X POST https://your-api-endpoint.execute-api.region.amazonaws.com/dev/offers \
      -H "Content-Type: application/json" \
-     -d '{"departure_date": "2024-01-01", "quantity": 5, "country": "France", "city": "Paris"}'
+     -d '{"firstName": "John", "lastName": "Doe", "phone": "0123456789"}'
+```
+
+## Optimisation
+
+### Minimiser les package
+```
+plugins:
+  - serverless-esbuild
+```
+### Ajuster la memoire
+```
+provider:
+  memorySize: 1024    # Configuration globale
+
+functions:
+  myFunction:
+    memorySize: 2048  # Configuration spécifique à une fonction
+```
+### Provisionner des concurrency
+```
+functions:
+  myFunction:
+    provisionedConcurrency: 5
+```
+
+### Reutiliser les initialisations (Connexion a la DB)
+```
+❌ MAUVAIS : Nouveau client à chaque appel
+export const handler = async () => {
+  const dynamo = new DynamoDB();
+}
+
+✅ BON : Client réutilisé
+const dynamo = new DynamoDB();
+export const handler = async () => {
+  
+}
 ```
 
 ## Tests
 
-Run unit tests:
+Exécutez les tests unitaires :
 
 ```bash
 npm test
 ```
 
-For integration tests:
+Pour les tests d'intégration :
 
 ```bash
 npm run test:integration
 ```
 
-## Contributing
+## Contribution
 
-Contributions are welcome! Please follow these steps:
+Les contributions sont les bienvenues ! Veuillez suivre ces étapes :
 
-1. Fork the project
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+1. Forkez le projet
+2. Créez votre branche de fonctionnalité (`git checkout -b feature/AmazingFeature`)
+3. Committez vos changements (`git commit -m 'Add some AmazingFeature'`)
+4. Poussez vers la branche (`git push origin feature/AmazingFeature`)
+5. Ouvrez une Pull Request
 
-## License
+## Licence
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.# GDG2024
+Ce projet est sous licence MIT. Voir le fichier [LICENSE](LICENSE) pour plus de détails.
