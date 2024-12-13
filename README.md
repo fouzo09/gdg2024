@@ -1,4 +1,4 @@
-# Dounkoun - Plateforme de Gestion d'Offres de Livraison
+# GDG 2024
 
 ## Table des matières
 
