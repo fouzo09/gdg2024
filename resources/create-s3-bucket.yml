@@ -1,0 +1,11 @@
+StudentS3Bucket:
+  Type: AWS::S3::Bucket
+  Properties:
+    BucketName: ${self:custom.bucketName}
+    VersioningConfiguration:
+      Status: Enabled
+    PublicAccessBlockConfiguration:
+      BlockPublicAcls: true
+      BlockPublicPolicy: true
+      IgnorePublicAcls: true
+      RestrictPublicBuckets: true

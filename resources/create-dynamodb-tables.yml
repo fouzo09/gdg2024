@@ -1,0 +1,25 @@
+StudentDynamoDBTable:
+  Type: 'AWS::DynamoDB::Table'
+  Properties:
+    TableName: ${self:custom.student}
+    AttributeDefinitions:
+      - AttributeName: id
+        AttributeType: S
+      - AttributeName: name
+        AttributeType: S
+    KeySchema:
+      - AttributeName: id
+        KeyType: HASH
+    GlobalSecondaryIndexes:
+      - IndexName: NameIndex
+        KeySchema:
+          - AttributeName: name
+            KeyType: HASH
+        Projection:
+          ProjectionType: ALL
+        ProvisionedThroughput:
+          ReadCapacityUnits: 5
+          WriteCapacityUnits: 5
+    ProvisionedThroughput:
+      ReadCapacityUnits: 5
+      WriteCapacityUnits: 5

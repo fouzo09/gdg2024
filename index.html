@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Document</title>
+</head>
+<body>
+<script>
+  (async ()=>{
+    const roles = await fetch("https://i8fb1xa1mk.execute-api.us-east-1.amazonaws.com/dev/api/v1/users",
+      {
+        headers: {
+          'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjgxNzlmZmIxLTM3OGMtNDhjNS04YmUwLTI5YTcyNDk2NDliNiIsInJvbGVJZCI6IjEyMzQ1IiwiaWF0IjoxNzMxMjUzNTgxLCJleHAiOjE3MzEyNTcxODF9.cDajpFzYr53A85pDq7eA20tMrEIu8EXbdu9SfmcYbq8'
+        }
+      });
+    console.log(roles);
+  })();
+</script>
+</body>
+</html>
